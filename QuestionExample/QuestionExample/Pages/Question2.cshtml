@@ -1,0 +1,121 @@
+﻿@page
+@model QuestionExample.Pages.Question2Model
+@{
+}
+
+<form method="Post" class="row g-3" id="PostForm">
+	<div class="col-md-3">
+		<label asp-for="Query.Year" class="form-label"></label>
+		<input asp-for="Query.Year" class="form-control" value="@DateTime.Now.Year" id="Year">
+		<span asp-validation-for="Query.Year" class="text-danger"></span>
+	</div>
+
+	<div class="col-md-6">
+		<label asp-for="Query.Brand" class="form-label"></label>
+		<select asp-for="Query.Brand" class="form-select" asp-items="@Model.BrandList" id="Brand"></select>
+	</div>
+
+	<div class="col-12">
+		<button type="button" class="btn btn-primary" id="BtnAjaxPostQuery">查詢</button>
+		<button type="button" class="btn btn-primary" id="BtnAjaxPostSave">存檔</button>
+	</div>
+</form>
+
+<br></br>
+
+<div id="outputDiv" style="visibility:hidden">
+	<table class="table table-hover table-bordered border-primary">
+		<thead class="table-dark">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.OrdSumList![0].EngMonth)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrdSumList![0].Brand)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrdSumList![0].SumAmount)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrdSumList![0].Forecase)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@*想把OrdSumList的資料顯示於此*@
+		</tbody>
+	</table>
+</div>
+
+<div id="LiveToast" class="toast align-items-center text-warning bg-success p-2 text-white bg-opacity-75 border-0 position-absolute bottom-0 end-0" style="z-index: 11" role="alert" aria-live="assertive" aria-atomic="true">
+	<div class="d-flex">
+		<div class="toast-body" id="ToastTxt"></div>
+		<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+	</div>
+</div>
+
+<div id="Loading" class="d-flex justify-content-center" style="visibility:hidden">
+	<div class="spinner-border text-info" style="width: 7rem; height: 7rem;" role="status">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		function LoadingVisible() {
+			const loading = document.getElementById("Loading")
+			loading.setAttribute("style", "visibility: visible");
+		}
+
+		function Loadinghidden() {
+			const loading = document.getElementById("Loading")
+			loading.setAttribute("style", "visibility: hidden");
+		}
+
+		function ShowToast(text) {
+			const toastTxt = document.getElementById("ToastTxt")
+			toastTxt.innerHTML = text
+
+			const liveToast = document.getElementById('LiveToast')
+			var toast = new bootstrap.Toast(liveToast)
+			toast.show()
+		}
+
+		$("#BtnAjaxPostQuery").click(function () {
+			LoadingVisible();
+			const formData = $("#PostForm").serialize();
+
+			$.ajax({
+				method: "post",
+				url: "Question2?handler=Query",
+				data: formData,
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("X-CSRF-TOKEN",
+						$('input:hidden[name="__RequestVerificationToken"]').val());
+				},
+				error: function (xhr, status, err) {
+					ShowToast("ERROR");
+				}
+			}).done(function (res) {
+				if (res.indexOf("Error") > -1) {
+					ShowToast(res);
+				}
+				else {
+					$("#outputDiv").attr("style", "visible");
+
+					//在這邊寫入tbody資料，因為之前使用BindProperty去操作，不知道可不可以做到，還是只能透過後端Return Json去處理
+					//另外想問BindProperty、Return Json有沒有什麼使用標準，或是有其他方法
+
+					ShowToast("查詢成功");
+				}
+			}).always(function () {
+				Loadinghidden();
+			});
+        });
+		
+	</script>
+}
