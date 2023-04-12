@@ -7,6 +7,7 @@ using QuestionExample.Function.IFunctions;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.DirectoryServices.ActiveDirectory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace QuestionExample.Pages
 {
@@ -15,11 +16,9 @@ namespace QuestionExample.Pages
 		private readonly SalesRepContext _salesRepDb;
 		private readonly ISqlExcute _sqlExcute;
 		public SelectList? BrandList { get; set; }
-		[BindProperty]
-		public QueryItem? Query { get; set; }
-		[BindProperty]
-		public List<OrderSum>? OrdSumList { get; set; }
 
+		[BindProperty(SupportsGet = true)]
+		public QueryItem? Query { get; set; }
 		public class QueryItem
 		{
 			[Display(Name = "資料年度：")]
@@ -30,22 +29,16 @@ namespace QuestionExample.Pages
 			public string Brand { get; set; }
 		}
 
+		[BindProperty]
+		public List<OrderSum>? OrdSumList { get; set; } = new List<OrderSum>();
 		public class OrderSum
 		{
-			[Display(Name = "訂單年月：")]
 			public string OrdDate { get; set; } = null!;
-
-			[Display(Name = "英文月份：")]
 			public string EngMonth { get; set; } = null!;
-
-			[Display(Name = "品牌：")]
 			public string Brand { get; set; } = null!;
-
-			[Display(Name = "加總金額(USD)：")]
 			public decimal? SumAmount { get; set; }
-
-			[Display(Name = "預告訂單金額(USD)：")]
-			public decimal? Forecase { get; set; }
+			public decimal? ForecastPrice { get; set; }
+			public bool IsEdit { get; set; } = false;
 		}
 
 		public Question2Model(SalesRepContext salesRepDb, ISqlExcute sqlExcute)
@@ -56,23 +49,10 @@ namespace QuestionExample.Pages
 
 		public void OnGet()
         {
-			DataTable dataTable = _sqlExcute.SqlExecuteQuery("select brand_no from brand");
-
-			List<SelectListItem> selectListItems = new List<SelectListItem>();
-
-			foreach (DataRow row in dataTable.Rows)
-			{
-				selectListItems.Add(new SelectListItem
-				{
-					Value = Convert.ToString(row["BRAND_NO"]),
-					Text = Convert.ToString(row["BRAND_NO"])
-				});
-			}
-
-			BrandList = new SelectList(selectListItems, "Value", "Text", "NIKE");
+			InsertBrandList();
 		}
 
-		public IActionResult OnPostQuery([FromForm] QueryItem query)
+		public void OnGetQuery()
 		{
 			string[] engMonAry = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
@@ -80,11 +60,11 @@ namespace QuestionExample.Pages
 			{
 				OrderSum OrdSum = new OrderSum();
 
-				OrdSum.OrdDate = query.Year.ToString() + (idx + 1).ToString().PadLeft(2, '0');
+				OrdSum.OrdDate = Query.Year.ToString() + (idx + 1).ToString().PadLeft(2, '0');
 				OrdSum.EngMonth = engMonAry[idx];
-				OrdSum.Brand = query.Brand;
-				OrdSum.SumAmount = 0;
-				OrdSum.Forecase = 0;
+				OrdSum.Brand = Query.Brand;
+				OrdSum.SumAmount = null;
+				OrdSum.ForecastPrice = null;
 
 				OrdSumList.Add(OrdSum);
 			}
@@ -108,8 +88,8 @@ namespace QuestionExample.Pages
 
 			SqlParameter[] parameters = new SqlParameter[]
 			{
-				new SqlParameter("@year", query.Year.ToString()),
-				new SqlParameter("@brand", query.Brand)
+				new SqlParameter("@year", Query.Year.ToString()),
+				new SqlParameter("@brand", Query.Brand)
 			};
 
 			DataTable orderData = _sqlExcute.SqlExecuteQuery(orderSql, parameters);
@@ -119,7 +99,7 @@ namespace QuestionExample.Pages
 
 			if (orderData == null || orderColumnsCount == 0 || orderRowsCount == 0)
 			{
-				return Content("Error!!沒有訂單合計資料");
+
 			}
 
 			foreach (DataRow row in orderData.Rows)
@@ -128,16 +108,16 @@ namespace QuestionExample.Pages
 
 				if (findList == null)
 				{
-					return Content("Error!!沒有找到[訂單合計：" + Convert.ToString(row["ODR_DATE"]) + "]的對應資料列，異常");
+
 				}
 				else
 				{
-					findList.SumAmount = Convert.ToDecimal(row["SUM_AMOUNT"]);
+					findList.SumAmount = Math.Round(Convert.ToDecimal(row["SUM_AMOUNT"]),2);
 				}
 			}
 
 			IEnumerable<ForecastOrder> forecastData = from forecast in _salesRepDb.ForecastOrders
-													  where forecast.Ym.Substring(0, 4) == query.Year.ToString()
+													  where forecast.Ym.Substring(0, 4) == Query.Year.ToString()
 													  orderby forecast.Ym
 													  select forecast;
 
@@ -147,7 +127,7 @@ namespace QuestionExample.Pages
 
 				if (findList == null)
 				{
-					return Content("Error!!沒有找到[預告訂單：" + forecastOrder.Ym + "]的對應資料列，異常");
+
 				}
 				else
 				{
@@ -155,7 +135,38 @@ namespace QuestionExample.Pages
 				}
 			}
 
-			return Content("OK!!");
+			InsertBrandList();
+		}
+
+		public void OnPost()
+		{
+			if (ModelState.IsValid)
+			{
+				foreach (var data in OrdSumList)
+				{
+					
+				}
+			}
+
+			InsertBrandList();
+		}
+
+		public void InsertBrandList()
+		{
+			DataTable dataTable = _sqlExcute.SqlExecuteQuery("select brand_no from brand");
+
+			List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+			foreach (DataRow row in dataTable.Rows)
+			{
+				selectListItems.Add(new SelectListItem
+				{
+					Value = Convert.ToString(row["BRAND_NO"]),
+					Text = Convert.ToString(row["BRAND_NO"])
+				});
+			}
+
+			BrandList = new SelectList(selectListItems, "Value", "Text", "NIKE");
 		}
 	}
 }

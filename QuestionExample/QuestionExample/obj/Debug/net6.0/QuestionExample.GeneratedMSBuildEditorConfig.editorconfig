@@ -9,45 +9,45 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = QuestionExample
 build_property.RootNamespace = QuestionExample
-build_property.ProjectDir = C:\Users\william.wu\source\repos\QuestionExample\QuestionExample\
+build_property.ProjectDir = D:\William\Question\QuestionExample\QuestionExample\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\william.wu\source\repos\QuestionExample\QuestionExample
+build_property.MSBuildProjectDirectory = D:\William\Question\QuestionExample\QuestionExample
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Error.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Index.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Privacy.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Question1.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Question1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb24xLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Question2.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Question2.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUXVlc3Rpb24yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/_ViewImports.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/_ViewStart.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/william.wu/source/repos/QuestionExample/QuestionExample/Pages/Shared/_Layout.cshtml]
+[D:/William/Question/QuestionExample/QuestionExample/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-uq0fcck1y1

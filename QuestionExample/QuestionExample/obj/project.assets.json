@@ -3701,11 +3701,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\william.wu\\source\\repos\\QuestionExample\\QuestionExample\\QuestionExample.csproj",
+      "projectUniqueName": "D:\\William\\Question\\QuestionExample\\QuestionExample\\QuestionExample.csproj",
       "projectName": "QuestionExample",
-      "projectPath": "C:\\Users\\william.wu\\source\\repos\\QuestionExample\\QuestionExample\\QuestionExample.csproj",
+      "projectPath": "D:\\William\\Question\\QuestionExample\\QuestionExample\\QuestionExample.csproj",
       "packagesPath": "C:\\Users\\william.wu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\william.wu\\source\\repos\\QuestionExample\\QuestionExample\\obj\\",
+      "outputPath": "D:\\William\\Question\\QuestionExample\\QuestionExample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
